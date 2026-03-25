@@ -29,7 +29,7 @@ function App() {
   };
 
   const rupiah = (number) => {
-    return "Rp " + Number(number).toLocaleString("id-ID");
+    return "Rp. " + Number(number).toLocaleString("id-ID");
   };
 
   const total = items.reduce((sum, i) => sum + i.price, 0);
