@@ -29,23 +29,25 @@ function App() {
   };
 
   const rupiah = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(number);
+    return "Rp. " + Number(number).toLocaleString("id-ID");
   };
 
   const total = items.reduce((sum, i) => sum + i.price, 0);
   const totalPeople = items.reduce((sum, i) => sum + i.people, 0);
+
   const perPerson = totalPeople ? total / totalPeople : 0;
+
+  const roundDown = Math.floor(perPerson / 1000) * 1000;
+  const roundUp = Math.ceil(perPerson / 1000) * 1000;
+
+  const sisaJikaDown = total - roundDown * totalPeople;
+  const sisaJikaUp = roundUp * totalPeople - total;
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex justify-center py-6 px-3">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-4 text-gray-800 dark:text-white">
         <div className="flex justify-between items-center mb-3">
-          <h1 className="text-lg font-bold">Split Bill</h1>
+          <h1 className="text-lg font-bold">Patungan Bareng</h1>
 
           <button
             onClick={() => setDark(!dark)}
@@ -60,18 +62,30 @@ function App() {
 
         <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-xl">
           <div className="flex justify-between mb-1">
-            <span>Total Bill</span>
+            <span>Total Tagihan</span>
             <span>{rupiah(total)}</span>
           </div>
 
           <div className="flex justify-between mb-1">
-            <span>Total Orang</span>
+            <span>Jumlah Orang</span>
             <span>{totalPeople}</span>
           </div>
 
-          <div className="flex justify-between font-bold text-lg">
-            <span>Per Orang</span>
-            <span>{rupiah(perPerson.toFixed(0))}</span>
+          <hr className="my-2 border-gray-300 dark:border-gray-600"/>
+
+          <div className="flex justify-between">
+            <span>Patungan / Orang</span>
+            <span>{rupiah(perPerson)}</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span>Bayar Hemat</span>
+            <span>{rupiah(roundDown)}</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span>Bayar Praktis</span>
+            <span>{rupiah(roundUp)}</span>
           </div>
         </div>
         <Footer />

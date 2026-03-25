@@ -1,12 +1,7 @@
 function ItemList({ items, deleteItem }) {
   const rupiah = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    }).format(number);
-   };
+    return "Rp. " + Number(number).toLocaleString("id-ID");
+  };
 
   return (
     <div className="mt-4 max-h-64 overflow-y-auto">
