@@ -28,9 +28,7 @@ function App() {
     setItems(items.filter((i) => i.id !== id));
   };
 
-  const rupiah = (number) => {
-    return "Rp. " + Number(number).toLocaleString("id-ID");
-  };
+  const rupiah = (number) => "Rp. " + Number(number).toLocaleString("id-ID");
 
   const total = items.reduce((sum, i) => sum + i.price, 0);
   const totalPeople = items.reduce((sum, i) => sum + i.people, 0);
@@ -40,7 +38,23 @@ function App() {
   const roundDown = Math.floor(perPerson / 1000) * 1000;
   const roundUp = Math.ceil(perPerson / 1000) * 1000;
 
+  const sisaJikaDown = total - roundDown * totalPeople;
+  const sisaJikaUp = roundUp * totalPeople - total;
+
   const isKeriting = perPerson % 1000 !== 0;
+  const shareWhatsApp = () => {
+    let message = `Patungan Bareng\nTotal: ${rupiah(total)}\nJumlah orangnya: ${totalPeople}\nPatungan per orang: ${rupiah(perPerson)}`;
+
+    if (isKeriting) {
+      message += `\nBayar Hemat: ${rupiah(roundDown)}\nBayar Praktis: ${rupiah(roundUp)}\nSisa Uang: ${rupiah(sisaJikaDown)}\nLebih (Tip/Kas): ${rupiah(sisaJikaUp)}`;
+    } else {
+      message += ``;
+    }
+
+    const encoded = encodeURIComponent(message);
+    window.open(`https://wa.me/?text=${encoded}`, "_blank");
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex justify-center py-6 px-3">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-4 text-gray-800 dark:text-white">
@@ -68,7 +82,7 @@ function App() {
             <span>{totalPeople}</span>
           </div>
 
-          <hr className="my-2 border-gray-300 dark:border-gray-600"/>
+          <hr className="my-2 border-gray-300 dark:border-gray-600" />
 
           <div className="flex justify-between">
             <span>Patungan / Orang</span>
@@ -88,7 +102,17 @@ function App() {
               </div>
             </>
           )}
+
+          {items.length > 0 && (
+            <button
+              onClick={shareWhatsApp}
+              className="mt-4 w-full py-2 rounded bg-gray-500 hover:bg-gray-600 text-white font-semibold"
+            >
+              Share ke whatsapp
+            </button>
+          )}
         </div>
+
         <Footer />
       </div>
     </div>
