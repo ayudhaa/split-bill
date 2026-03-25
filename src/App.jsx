@@ -29,7 +29,7 @@ function App() {
   };
 
   const rupiah = (number) => {
-    return "Rp. " + Number(number).toLocaleString("id-ID");
+    return "Rp " + Number(number).toLocaleString("id-ID");
   };
 
   const total = items.reduce((sum, i) => sum + i.price, 0);
@@ -40,15 +40,12 @@ function App() {
   const roundDown = Math.floor(perPerson / 1000) * 1000;
   const roundUp = Math.ceil(perPerson / 1000) * 1000;
 
-  const sisaJikaDown = total - roundDown * totalPeople;
-  const sisaJikaUp = roundUp * totalPeople - total;
-
+  const isKeriting = perPerson % 1000 !== 0;
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex justify-center py-6 px-3">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-4 text-gray-800 dark:text-white">
         <div className="flex justify-between items-center mb-3">
           <h1 className="text-lg font-bold">Patungan Bareng</h1>
-
           <button
             onClick={() => setDark(!dark)}
             className="px-2 py-1 rounded bg-gray-200 dark:bg-gray-700"
@@ -78,15 +75,19 @@ function App() {
             <span>{rupiah(perPerson)}</span>
           </div>
 
-          <div className="flex justify-between">
-            <span>Bayar Hemat</span>
-            <span>{rupiah(roundDown)}</span>
-          </div>
+          {isKeriting && (
+            <>
+              <div className="flex justify-between">
+                <span>Bayar Hemat</span>
+                <span>{rupiah(roundDown)}</span>
+              </div>
 
-          <div className="flex justify-between">
-            <span>Bayar Praktis</span>
-            <span>{rupiah(roundUp)}</span>
-          </div>
+              <div className="flex justify-between">
+                <span>Bayar Praktis</span>
+                <span>{rupiah(roundUp)}</span>
+              </div>
+            </>
+          )}
         </div>
         <Footer />
       </div>
