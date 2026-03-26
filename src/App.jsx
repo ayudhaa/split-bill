@@ -46,7 +46,7 @@ function App() {
     let message = `Patungan Bareng\n\nTotal: ${rupiah(total)}\nJumlah orangnya: ${totalPeople}\nPatungan per orang: ${rupiah(perPerson)}`;
 
     if (isKeriting) {
-      message += `\nBayar Hemat: ${rupiah(roundDown)}\nBayar Praktis: ${rupiah(roundUp)}`;
+      message += `\n\nHematnya: ${rupiah(roundDown)}\nPraktisnya: ${rupiah(roundUp)}`;
     } else {
       message += ``;
     }
