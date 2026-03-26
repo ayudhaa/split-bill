@@ -43,10 +43,10 @@ function App() {
 
   const isKeriting = perPerson % 1000 !== 0;
   const shareWhatsApp = () => {
-    let message = `Patungan Bareng\nTotal: ${rupiah(total)}\nJumlah orangnya: ${totalPeople}\nPatungan per orang: ${rupiah(perPerson)}`;
+    let message = `Patungan Bareng\n\nTotal: ${rupiah(total)}\nJumlah orangnya: ${totalPeople}\nPatungan per orang: ${rupiah(perPerson)}`;
 
     if (isKeriting) {
-      message += `\nBayar Hemat: ${rupiah(roundDown)}\nBayar Praktis: ${rupiah(roundUp)}\nSisa Uang: ${rupiah(sisaJikaDown)}\nLebih (Tip/Kas): ${rupiah(sisaJikaUp)}`;
+      message += `\nBayar Hemat: ${rupiah(roundDown)}\nBayar Praktis: ${rupiah(roundUp)}`;
     } else {
       message += ``;
     }
